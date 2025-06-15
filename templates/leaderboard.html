@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><title>{{ track_names[track_index] }}</title><style>
+  body{font-family:sans-serif;margin:20px}
+  nav a{margin:0 10px;text-decoration:none;color:blue}
+  table{width:80%;margin:auto;border-collapse:collapse}
+  th,td{border:1px solid #ccc;padding:8px;text-align:center}
+</style></head><body>
+<nav>
+  {% for name in track_names %}
+    <a href="{{ url_for('track_page', track_index=loop.index0) }}"
+      {% if loop.index0==track_index %}style="font-weight:bold"{% endif %}>
+      {{ name }}
+    </a>
+  {% endfor %}
+  | <a href="{{ url_for('overall_page') }}">Overall</a>
+</nav>
+
+<h1>{{ track_names[track_index] }}</h1>
+<div><button onclick="copy()">Copy Track Code</button> <span id="code">{{ track_codes[track_index] }}</span></div>
+<div><img src="{{ image_file }}" style="max-width:100%;"></div>
+
+<table>
+  <tr><th>#</th><th>Name</th><th>Time (s)</th></tr>
+  {% for player in leaderboard %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ player.name }}</td>
+      <td>{{ "%.3f"|format(player.time) }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+<script>
+function copy(){
+  const code = document.getElementById("code").innerText;
+  navigator.clipboard.writeText(code).then(()=>alert("Copied: "+code));
+}
+</script>
+
+</body></html>

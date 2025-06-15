@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><title>Home</title></head><body>
+  <h1>Tracks</h1>
+  <form action="/ping" method="get">
+    <button type="submit">🔄 Update Leaderboards</button>
+  </form>
+  <ul>
+    {% for name in track_names %}
+      <li><a href="{{ url_for('track_page', track_index=loop.index0) }}">{{ name }}</a></li>
+    {% endfor %}
+  </ul>
+  <h2><a href="{{ url_for('overall_page') }}">Overall Leaderboard</a></h2>
+</body></html>
+
